@@ -12,6 +12,7 @@
 * 기획 v1 확정 (근접 전투, 최소 상점 메타, 런 재화 손실, PC 우선, Simple 던전 5~8방)
 * Epic Online Services 예약 (클라우드 저장·업적, `IOnlineServices`, 본연동은 v2+)
 * 구현 1단계: Town/Dungeon 루프, 재화, 탑다운 이동, Simple procedural 던전, 온라인 Null stub
+* 최소 근접 전투 (플레이어 공격, 추적 적, HP/사망, 낙하 사망)
 
 ### Changed
 

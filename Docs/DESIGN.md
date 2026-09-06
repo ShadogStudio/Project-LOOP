@@ -219,7 +219,7 @@ Town (prepare / minimal shop)
 
 ## Current Phase
 
-**구현 1단계 완료(플레이 가능).** 다음: 근접 전투 최소 버전.
+**최소 근접 전투까지 구현.** 다음: 마을 최소 상점/해금.
 
 ## Deferred (v2+)
 
