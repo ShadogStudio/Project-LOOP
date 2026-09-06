@@ -1,28 +1,28 @@
 # DEVELOPMENT
 
-## Current Status
+## 현재 상태
 
-마을 최소 상점(영구 Vitality/Power 해금)까지 구현
+마을 최소 상점(영구 활력/힘 해금)까지 구현. 포탈·상점 라벨, 공격 피드백, 적 HP 표시 포함.
 
-## In Progress
+## 진행 중
 
-* (플레이테스트 대기)
+* (없음 — 다음 작업 대기)
 
-## Completed
+## 완료
 
-* [x] Town ↔ Dungeon 런 루프 / 재화 / Simple dungeon
+* [x] 마을 ↔ 던전 런 루프 / 재화 / 단순 절차적 던전
 * [x] 최소 근접 전투 + 적 최소 1마리 보장
 * [x] 낙하 사망 (플레이어/적)
-* [x] 마을 상점: 골드 → Max HP / Melee Damage 영구 해금
+* [x] 마을 상점: 골드 → 최대 HP / 근접 데미지 영구 해금
+* [x] 포탈·상점 안내 라벨, 공격 스윙 피드백, 적 HP 오버레이
 
-## Next
+## 다음
 
-* [ ] 상점·전투 포함 플레이테스트
-* [ ] ThirdParty 훅에 Synty 바인딩 (로컬)
-* [ ] Dungeon Architect 어댑터 / EOS 본연동 (v2+)
+* [ ] 로컬 ThirdParty 외형 바인딩
+* [ ] 던전 도구 어댑터 / EOS 본연동 (v2+)
 
-## Issues
+## 이슈
 
-* [!] 적·상점 모두 플레이스홀더 — 이후 Synty/UI로 교체
-* [!] ThirdParty·DA·EOS 없이도 공개 베이스가 컴파일·오프라인 동작해야 함
+* [!] 적·환경은 플레이스홀더 — 이후 로컬 에셋으로 교체
+* [!] ThirdParty·외부 도구·EOS 없이도 공개 베이스가 컴파일·오프라인 동작해야 함
 * [!] EOS 자격 증명은 공개 Git에 올리지 말 것

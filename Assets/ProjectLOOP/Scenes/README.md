@@ -1,6 +1,6 @@
 # Scenes
 
-- `Town.unity` — hub (Build Settings index 0)
-- `Dungeon.unity` — procedural run via `DungeonRunController`
+- `Town.unity` — 거점 (빌드 설정 인덱스 0)
+- `Dungeon.unity` — `DungeonRunController`로 절차적 런
 
-Play from Town. WASD move. Purple portal → dungeon. Green portal → deposit & return. Red zones → death (lose run loot).
+Town에서 Play. WASD 이동. 보라 포털 → 던전. 초록 포털 → 예치 후 복귀.

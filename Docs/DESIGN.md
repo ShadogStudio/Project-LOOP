@@ -1,187 +1,145 @@
-# Project LOOP — Design Document
+# Project LOOP — 기획 문서
 
-## Overview
+## 개요
 
-- **Project**: Project LOOP
-- **Purpose**: Portfolio Unity project (public Git base + local full-asset builds)
-- **Genre**: 3D top-down roguelike
-- **Engine**: Unity 6 (URP)
+- **프로젝트**: Project LOOP
+- **목적**: 포트폴리오용 Unity 프로젝트 (공개 Git 베이스 + 로컬 풀에셋 빌드)
+- **장르**: 3D 탑다운 로그라이크
+- **엔진**: Unity 6 (URP)
 
-## Core Fantasy
+## 핵심 판타지
 
 마을을 거점으로 던전에 반복 진입한다. 성공적으로 복귀하면 수확물을 마을에 쌓고, 죽으면 이번 런에서 챙긴 것은 잃는다.
 
-## Core Loop
+## 핵심 루프
 
 ```text
-Town (prepare / spend persistent wealth)
-  → Enter Dungeon
-  → Explore / Collect run loot
-  → Return to Town (deposit run loot)  OR  Die (lose run loot)
-  → Repeat
+마을 (준비 / 영구 재화 소비)
+  → 던전 입장
+  → 탐험 / 런 전리품 수집
+  → 마을 복귀 (전리품 예치)  또는  사망 (런 전리품 손실)
+  → 반복
 ```
 
-## Economy Rules
+## 경제 규칙
 
-| Location | Currency | On death | On successful return |
-|----------|----------|----------|----------------------|
-| Town wallet | Persistent gold | Kept | Receives deposited run loot |
-| Run inventory | Dungeon-carried loot | Cleared | Deposited into town wallet |
+| 위치 | 재화 | 사망 시 | 성공 복귀 시 |
+|------|------|---------|--------------|
+| 마을 지갑 | 영구 골드 | 유지 | 런 전리품을 예치받아 증가 |
+| 런 인벤토리 | 던전에서 휴대하는 전리품 | 초기화 | 마을 지갑으로 예치 |
 
-## Planned Scenes
+## 예정 씬
 
-| Scene | Role |
-|-------|------|
-| `Town` | Hub. Prepare, spend persistent wealth, enter dungeon. |
-| `Dungeon` | Run space. Generated layout, explore, collect loot, return or die. |
+| 씬 | 역할 |
+|----|------|
+| `Town` | 거점. 준비, 영구 재화 소비, 던전 입장 |
+| `Dungeon` | 런 공간. 생성 레이아웃, 탐험·루팅, 복귀 또는 사망 |
 
 ---
 
-## Architecture Decisions (Confirmed)
+## 아키텍처 결정 (확정)
 
-### Core systems — own implementation
+### 핵심 시스템 — 자체 구현
 
 이동, 카메라, 전투, 재화, 런 루프 등 **핵심 시스템은 자체 구현**한다.
 
-- TopDown Engine / uMMORPG 등 완성형 템플릿에 게임 로직을 맡기지 않는다.
+- 완성형 게임플레이 템플릿에 핵심 로직을 맡기지 않는다.
 - 에셋은 표현(모델·애니·VFX·UI 스킨)과 선택적 도구(저장, 조이스틱 등)에 사용한다.
 - 공개 Git에는 자체 코드가 남아 포트폴리오로 설명할 수 있어야 한다.
 
-### Dungeon generation — swappable providers
+### 던전 생성 — 교체 가능한 제공자
 
 ```text
-Game code
-  → IDungeonGenerator (project interface)
+게임 코드
+  → IDungeonGenerator (프로젝트 인터페이스)
        ├─ SimpleProceduralDungeonGenerator   ← 개발 베이스 (기본)
-       └─ DungeonArchitectDungeonGenerator   ← 최종 목표 (에셋 있을 때)
+       └─ DungeonArchitectDungeonGenerator   ← 최종 목표 (도구 연동 시)
 ```
 
-| Stage | Provider | Goal |
-|-------|----------|------|
-| Dev base | Simple procedural placement | 방/복도/입출구/스폰 포인트를 규칙 기반으로 배치 |
-| Final | Dungeon Architect adapter | 동일 인터페이스로 교체·호출 |
+| 단계 | 제공자 | 목표 |
+|------|--------|------|
+| 개발 베이스 | 단순 절차적 배치 | 방/복도/입출구/스폰 포인트를 규칙 기반으로 배치 |
+| 최종 | Dungeon Architect 어댑터 | 동일 인터페이스로 교체·호출 |
 
 원칙:
 
 1. 게임플레이는 **생성기 구현체가 아니라 인터페이스 결과물**(레이아웃, 스폰 포인트, 출구 등)만 본다.
-2. ThirdParty(Dungeon Architect 등)가 없어도 프로젝트가 컴파일·실행되도록, 어댑터는 선택 조립 또는 플레이스홀더 구현으로 분리한다.
-3. Synty 던전 모듈/프리팹은 **배치 슬롯에 꽂히는 콘텐츠**로 취급한다. 생성 로직과 분리한다.
+2. 외부 도구가 없어도 프로젝트가 컴파일·실행되도록, 어댑터는 선택 조립 또는 플레이스홀더 구현으로 분리한다.
+3. 던전 모듈/프리팹은 **배치 슬롯에 꽂히는 콘텐츠**로 취급한다. 생성 로직과 분리한다.
 
-### Art / tools — asset-ready hooks
+### 아트 / 도구 — 에셋 연결 훅
 
-추가 에셋이 들어와도 코드 전면 수정 없이 연결되도록, 다음을 **호출 지점(hook)** 으로 둔다.
+추가 에셋이 들어와도 코드 전면 수정 없이 연결되도록, 다음을 **호출 지점(훅)** 으로 둔다.
 
-| Hook | Purpose | Example later binding |
-|------|---------|------------------------|
-| `IDungeonGenerator` | 던전 레이아웃 | Simple → Dungeon Architect |
-| Character / prefab refs | 플레이어·적 외형 | Placeholder → POLYGON Hero/Enemies |
-| Animation set refs | 이동·전투 클립 | Placeholder → Human Mega |
-| VFX slots | 히트·스킬 | None → POLYGON Particle FX |
-| UI skin / widget | HUD·인벤 | Stub UI → GUI Pro Fantasy RPG |
-| Mobile stick input | 터치 이동 | Optional → Ultimate Joystick |
-| Save backend | 마을 재화 등 로컬 저장 | PlayerPrefs / Easy Save → 동일 포트를 EOS Player Data 로 확장 |
-| `IOnlineServices` | 클라우드 저장·업적 등 공통 온라인 | Null stub → Epic Online Services |
+| 훅 | 목적 | 이후 연결 예 |
+|----|------|--------------|
+| `IDungeonGenerator` | 던전 레이아웃 | Simple → 전용 던전 도구 어댑터 |
+| 캐릭터 / 프리팹 참조 | 플레이어·적 외형 | 플레이스홀더 → 로컬 캐릭터 프리팹 |
+| 애니메이션 세트 참조 | 이동·전투 클립 | 플레이스홀더 → 로컬 애니 세트 |
+| VFX 슬롯 | 히트·스킬 | 없음 → 로컬 파티클 |
+| UI 스킨 / 위젯 | HUD·인벤 | 스텁 UI → 로컬 UI 키트 |
+| 모바일 스틱 입력 | 터치 이동 | 선택 → 조이스틱 에셋 |
+| 저장 백엔드 | 마을 재화 등 로컬 저장 | PlayerPrefs → 동일 포트를 클라우드 저장으로 확장 |
+| `IOnlineServices` | 클라우드 저장·업적 등 | Null 스텁 → Epic Online Services |
 
 로컬 전용 에셋 경로: `Assets/ThirdParty/` (Git 미포함, README만 공개).
 
-### Online services — Epic Online Services (EOS)
+시각 톤은 **판타지 로우폴리**로 맞춘다. 구체 팩 목록은 문서에 두지 않고, 로컬 `Assets/ThirdParty`와 보유 목록에서 관리한다.
+
+### 온라인 서비스 — Epic Online Services (EOS)
 
 공통으로 재사용할 온라인 기능만 대상으로 한다. **본연동은 코어 루프 플레이 가능 이후(v2+)**.
 
-| Feature (v2+) | Scope |
-|---------------|--------|
-| Cloud save | 마을 지갑·해금 등 메타 진행 (런 인벤은 로컬/세션) |
-| Achievements | 공통 업적 이벤트 (첫 클리어, 누적 골드 등) |
-| Auth | EOS 로그인(필요 시). 게스트/오프라인 폴백 유지 |
+| 기능 (v2+) | 범위 |
+|------------|------|
+| 클라우드 저장 | 마을 지갑·해금 등 메타 진행 (런 인벤은 로컬/세션) |
+| 업적 | 공통 업적 이벤트 (첫 클리어, 누적 골드 등) |
+| 인증 | EOS 로그인(필요 시). 게스트/오프라인 폴백 유지 |
 
 원칙:
 
 1. 게임플레이는 `IOnlineServices` / 저장 포트만 호출한다. EOS SDK를 직접 호출하지 않는다.
-2. v1 기본 구현은 **Null / Local stub** (오프라인 완전 동작).
+2. v1 기본 구현은 **Null / 로컬 스텁** (오프라인 완전 동작).
 3. EOS 패키지·자격 증명은 `Assets/ThirdParty` 또는 로컬 설정으로 두고 공개 Git에 시크릿을 올리지 않는다.
 4. 멀티플레이·매치메이킹 등은 범위 밖(당분간).
 
 ---
 
-## Core Asset Set (from 유니티 에셋 list)
-
-시각 톤은 **Synty POLYGON Fantasy**로 통일한다.
-
-### Phase A — 로컬 개발에 우선 임포트
-
-| Role | Asset |
-|------|--------|
-| Town | POLYGON - Town Pack, Shops Pack |
-| Dungeon modules | POLYGON - Dungeons Pack, Fantasy Dungeon Map |
-| Nature (optional bridge) | POLYGON - Nature Pack, Adventure Pack |
-| Player / NPC | Modular Fantasy Hero, Fantasy Characters, Knights / Fantasy Rivals |
-| Customize | Character Enhancement Toolkit for Polygon Packs |
-| Animation | Human Mega Animations Pack (+ Human Basic Motions) |
-| Blockout | POLYGON - Prototype Pack |
-| Particles | POLYGON - Particle FX Pack |
-
-### Phase B — UX / polish (필요할 때)
-
-| Role | Asset |
-|------|--------|
-| UI | GUI Pro - Fantasy RPG or Simple Fantasy UI, POLYGON Icons |
-| Mobile input | Ultimate Joystick |
-| Audio | Fantasy Game Sound Effects / Fantasy Sounds Bundle / Monster Sounds |
-| Save (optional) | Easy Save |
-
-### Phase C — final dungeon tool
-
-| Role | Asset |
-|------|--------|
-| Procedural dungeon | Dungeon Architect (via `IDungeonGenerator` adapter) |
-
-### Phase D — online (after core loop)
-
-| Role | Service |
-|------|---------|
-| Cloud save / Achievements | Epic Online Services via `IOnlineServices` |
-
-### Out of scope for this title
-
-Sci-Fi / Western / Pirate / Office 등 비판타지 POLYGON 팩, 2D 전용 팩, 완성형 게임 템플릿(TopDown Engine, uMMORPG 등)에 핵심 로직 의존.
-
----
-
-## Development Roadmap
+## 개발 로드맵
 
 ```text
 1. 기획 v1 확정 (완료)
 2. 자체 코어 골격
-   - Town ↔ Dungeon 씬 흐름
+   - 마을 ↔ 던전 씬 흐름
    - TownWallet / RunInventory
-   - Top-down move + camera (own)
+   - 탑다운 이동 + 카메라 (자체)
 3. IDungeonGenerator + SimpleProceduralDungeonGenerator
-   - Placeholder modules로 방 배치·입출구·스폰
-4. ThirdParty 훅에 Synty 모듈 바인딩 (로컬만)
+   - 플레이스홀더로 방 배치·입출구·스폰
+4. ThirdParty 훅에 로컬 모듈 바인딩
 5. 최소 전투·루팅·사망/복귀
 6. UI / 사운드 / VFX 슬롯 채우기
-7. DungeonArchitectDungeonGenerator 어댑터 연결
-8. Epic Online Services 연동 (클라우드 저장·업적, `IOnlineServices`)
+7. 던전 도구 어댑터 연결
+8. Epic Online Services 연동 (클라우드 저장·업적)
 9. APK / EXE 로컬 빌드 (ThirdParty 포함)
 ```
 
-공개 Git: 인터페이스 + Simple generator + placeholders.  
-로컬 빌드: ThirdParty 메쉬/애니/UI/DA 연결.
+공개 Git: 인터페이스 + Simple 생성기 + 플레이스홀더.  
+로컬 빌드: ThirdParty 메쉬/애니/UI/던전 도구 연결.
 
 ---
 
-## Public vs Local Assets
+## 공개 vs 로컬 에셋
 
-| Path | Git | Use |
-|------|-----|-----|
-| `Assets/ProjectLOOP/` | Yes | Own code, scenes, placeholders, generator interface |
-| `Assets/Settings/` | Yes | URP settings |
-| `Assets/ThirdParty/` | No (README only) | POLYGON, DA, GUI, SFX, etc. |
-| `Build/`, `*.apk`, `*.exe` | No | Local distribution builds |
+| 경로 | Git | 용도 |
+|------|-----|------|
+| `Assets/ProjectLOOP/` | 포함 | 자체 코드, 씬, 플레이스홀더, 생성기 인터페이스 |
+| `Assets/Settings/` | 포함 | URP 설정 |
+| `Assets/ThirdParty/` | 미포함 (README만) | 구매/외부 에셋 (로컬 전용) |
+| `Build/`, `*.apk`, `*.exe` | 미포함 | 로컬 배포 빌드 |
 
 ---
 
-## Confirmed Gameplay (v1)
+## 확정 게임플레이 (v1)
 
 | 항목 | 결정 |
 |------|------|
@@ -189,52 +147,52 @@ Sci-Fi / Western / Pirate / Office 등 비판타지 POLYGON 팩, 2D 전용 팩, 
 | 메타 진행 | 마을 골드로 상점/해금(최소). NPC 대화·크래프트는 후순위 |
 | 실패 비용 | 런 휴대 재화만 손실. 장비 내구도 없음 |
 | 세션 | 한 런 약 5~15분. 초반 방·적 밀도는 낮게 |
-| 플랫폼 | PC(EXE) 우선, WASD. 모바일은 Ultimate Joystick 훅만 예약 |
+| 플랫폼 | PC(EXE) 우선, WASD. 모바일은 조이스틱 훅만 예약 |
 | 카메라 | 탑다운 고정 각도 약 50° + 플레이어 팔로우. 줌은 후순위 |
 | 조작 | PC: WASD 이동, 마우스 또는 단일 키로 기본 공격 |
 
-### Simple procedural dungeon (v1)
+### 단순 절차적 던전 (v1)
 
 `SimpleProceduralDungeonGenerator` 기본 규칙:
 
-| Rule | Value |
-|------|--------|
-| Room count | 5~8 |
-| Connectivity | 복도로 연결 (입구에서 출구까지 도달 가능) |
-| Entrances / exits | 입구 1, 출구 1 |
-| Enemy / loot density | 희소 (초반 난이도 낮게) |
-| Modules | Placeholder 우선 → 이후 POLYGON 던전 모듈 슬롯 바인딩 |
+| 규칙 | 값 |
+|------|-----|
+| 방 개수 | 5~8 |
+| 연결 | 복도로 연결 (입구에서 출구까지 도달 가능) |
+| 입구 / 출구 | 입구 1, 출구 1 |
+| 적 / 전리품 밀도 | 희소 (초반 난이도 낮게) |
+| 모듈 | 플레이스홀더 우선 → 이후 로컬 던전 모듈 슬롯 바인딩 |
 
 런 흐름:
 
 ```text
-Town (prepare / minimal shop)
+마을 (준비 / 최소 상점)
   → IDungeonGenerator (Simple v1)
-  → Dungeon (melee, sparse loot)
-  → Return (deposit)  OR  Die (clear run loot)
-  → Town
+  → 던전 (근접, 희소 전리품)
+  → 복귀 (예치)  또는  사망 (런 전리품 초기)
+  → 마을
 ```
 
 ---
 
-## Current Phase
+## 현재 단계
 
-**전투 + 마을 상점까지 구현.** 다음: Synty 로컬 바인딩 또는 플레이테스트 피드백 반영.
+**전투 + 마을 상점까지 구현.** 다음: 로컬 ThirdParty 외형 바인딩 또는 플레이테스트 피드백 반영.
 
-## Deferred (v2+)
+## 보류 (v2+)
 
 - 원거리·스킬 전투 및 전투 피드백 고도화
-- Dungeon Architect 어댑터 전환·튜닝
+- 던전 도구 어댑터 전환·튜닝
 - Epic Online Services (클라우드 저장·업적) 본연동
 - 모바일(APK) 입력 UX 본구현
 - 카메라 줌/시네마틱
 - NPC 퀘스트·크래프트 등 확장 메타
 - 장비 손실·내구도 등 추가 실패 비용
 
-## Non-Goals (Near Term)
+## 단기 비목표
 
-- Depending on TopDown Engine for core loop
-- Shipping ThirdParty assets in the public repository
-- Implementing Dungeon Architect adapter before Simple generator works
-- Implementing EOS before local save + core loop work
-- EOS multiplayer / matchmaking in v1–v2 scope
+- 완성형 탑다운 템플릿에 코어 루프를 의존
+- 공개 저장소에 ThirdParty 에셋 포함
+- Simple 생성기 동작 전에 던전 도구 어댑터부터 구현
+- 로컬 저장 + 코어 루프 전에 EOS부터 구현
+- v1~v2 범위의 EOS 멀티플레이 / 매치메이킹

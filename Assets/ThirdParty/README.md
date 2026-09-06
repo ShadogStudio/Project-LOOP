@@ -1,4 +1,4 @@
-# ThirdParty Assets (Local Only)
+# ThirdParty 에셋 (로컬 전용)
 
 이 폴더는 **공개 Git에 포함되지 않습니다.**
 
@@ -14,5 +14,6 @@
 ## 주의
 
 - 클론만으로는 ThirdParty 내용이 없습니다.
-- 플레이스홀더만으로 Town/Dungeon 스텁은 실행됩니다.
+- 플레이스홀더만으로 마을/던전 스텁은 실행됩니다.
 - 빌드 산출물(`Build/`, `*.apk`, `*.exe`)도 Git에 올리지 마세요.
+- Package Manager가 `Assets/Synty` 등으로 임포트하면 `Assets/ThirdParty/` 아래로 옮기세요.
