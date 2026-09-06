@@ -56,6 +56,11 @@ namespace ProjectLOOP
                 PlaceholderVisuals.ApplyColor(floor, new Color(0.22f, 0.22f, 0.28f));
             }
 
+            PlaceholderVisuals.CreateOutOfBoundsKillVolume(
+                root,
+                new Vector3(0f, -12f, 0f),
+                new Vector3(200f, 4f, 200f));
+
             Vector3 spawn = layout.Rooms[0].WorldCenter + Vector3.up * (PlaceholderVisuals.FloorSurfaceY() + 0.05f);
             foreach (var marker in layout.Markers)
             {
@@ -74,7 +79,7 @@ namespace ProjectLOOP
                         CreateLoot(root, marker.Position, 10);
                         break;
                     case DungeonMarkerKind.EnemySpawn:
-                        CreateHazard(root, marker.Position);
+                        CreateEnemy(root, marker.Position);
                         break;
                 }
             }
@@ -107,16 +112,14 @@ namespace ProjectLOOP
             PlaceholderVisuals.ApplyColor(go, new Color(1f, 0.85f, 0.2f));
         }
 
-        static void CreateHazard(Transform parent, Vector3 position)
+        static void CreateEnemy(Transform parent, Vector3 markerPosition)
         {
-            var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            go.name = "DeathZone";
-            go.transform.SetParent(parent, false);
-            go.transform.position = position;
-            go.transform.localScale = new Vector3(2.2f, 0.35f, 2.2f);
-            go.GetComponent<BoxCollider>().isTrigger = true;
-            go.AddComponent<PlayerDeathTrigger>();
-            PlaceholderVisuals.ApplyColor(go, new Color(0.85f, 0.2f, 0.2f));
+            var feet = new Vector3(
+                markerPosition.x,
+                PlaceholderVisuals.FloorSurfaceY() + 0.05f,
+                markerPosition.z);
+            var enemy = PlaceholderVisuals.CreateEnemy(feet);
+            enemy.transform.SetParent(parent, true);
         }
     }
 }

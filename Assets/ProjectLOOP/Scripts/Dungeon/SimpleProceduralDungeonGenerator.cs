@@ -74,15 +74,44 @@ namespace ProjectLOOP
                     continue;
                 }
 
-                var offset = new Vector3(
-                    (float)(rng.NextDouble() * 2.5 - 1.25),
-                    0.5f,
-                    (float)(rng.NextDouble() * 2.5 - 1.25));
+                var offset = RandomOffset(rng);
                 var kind = rng.NextDouble() < 0.55 ? DungeonMarkerKind.LootSpawn : DungeonMarkerKind.EnemySpawn;
                 markers.Add(new DungeonMarker(kind, rooms[i].WorldCenter + offset));
             }
 
+            EnsureAtLeastOneEnemy(rng, rooms, markers);
+
             return new DungeonLayout(seed, rooms, corridors, markers);
+        }
+
+        static void EnsureAtLeastOneEnemy(
+            System.Random rng,
+            List<DungeonRoomSpec> rooms,
+            List<DungeonMarker> markers)
+        {
+            for (var i = 0; i < markers.Count; i++)
+            {
+                if (markers[i].Kind == DungeonMarkerKind.EnemySpawn)
+                {
+                    return;
+                }
+            }
+
+            // Prefer a middle room; fall back to any non-entrance room.
+            var roomIndex = rooms.Count > 2
+                ? rng.Next(1, rooms.Count - 1)
+                : Mathf.Min(1, rooms.Count - 1);
+            markers.Add(new DungeonMarker(
+                DungeonMarkerKind.EnemySpawn,
+                rooms[roomIndex].WorldCenter + RandomOffset(rng)));
+        }
+
+        static Vector3 RandomOffset(System.Random rng)
+        {
+            return new Vector3(
+                (float)(rng.NextDouble() * 2.5 - 1.25),
+                0.5f,
+                (float)(rng.NextDouble() * 2.5 - 1.25));
         }
 
         DungeonRoomSpec MakeRoom(Vector2Int grid)

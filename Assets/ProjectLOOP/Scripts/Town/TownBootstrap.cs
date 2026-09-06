@@ -22,6 +22,11 @@ namespace ProjectLOOP
                 depositLoot: false,
                 new Color(0.45f, 0.35f, 0.9f));
 
+            PlaceholderVisuals.CreateOutOfBoundsKillVolume(
+                transform,
+                new Vector3(0f, -12f, 0f),
+                new Vector3(80f, 4f, 80f));
+
             var hud = gameObject.AddComponent<StubHud>();
             hud.SetLocationLabel("Town");
         }

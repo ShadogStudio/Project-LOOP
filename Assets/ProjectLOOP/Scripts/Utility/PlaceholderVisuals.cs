@@ -32,17 +32,68 @@ namespace ProjectLOOP
         /// <param name="feetPosition">World position of the CharacterController feet (bottom).</param>
         public static GameObject CreatePlayer(Vector3 feetPosition)
         {
-            var go = new GameObject("Player");
-            go.tag = "Player";
+            var go = CreateCapsuleActor(
+                "Player",
+                "Player",
+                feetPosition,
+                new Color(0.25f, 0.7f, 1f));
+
+            var health = go.AddComponent<Health>();
+            health.Configure(50);
+
+            var melee = go.AddComponent<MeleeAttack>();
+            melee.Configure(1.7f, 14, 0.5f, "Enemy");
+
+            go.AddComponent<TopDownPlayerMotor>();
+            go.AddComponent<PlayerMeleeInput>();
+            go.AddComponent<PlayerDeathHandler>();
+            go.AddComponent<FallYKill>();
+            return go;
+        }
+
+        public static GameObject CreateEnemy(Vector3 feetPosition)
+        {
+            var go = CreateCapsuleActor(
+                "Enemy",
+                "Enemy",
+                feetPosition,
+                new Color(0.85f, 0.25f, 0.25f));
+
+            var health = go.AddComponent<Health>();
+            health.Configure(30);
+
+            var melee = go.AddComponent<MeleeAttack>();
+            melee.Configure(1.55f, 8, 0.85f, "Player");
+
+            go.AddComponent<SimpleChaseEnemy>();
+            go.AddComponent<FallYKill>();
+            return go;
+        }
+
+        public static GameObject CreateOutOfBoundsKillVolume(Transform parent, Vector3 center, Vector3 size)
+        {
+            var go = new GameObject("OutOfBoundsKillZone");
+            go.transform.SetParent(parent, false);
+            go.transform.position = center;
+            var box = go.AddComponent<BoxCollider>();
+            box.isTrigger = true;
+            box.size = size;
+            go.AddComponent<OutOfBoundsKillZone>();
+            return go;
+        }
+
+        static GameObject CreateCapsuleActor(string name, string tag, Vector3 feetPosition, Color color)
+        {
+            var go = new GameObject(name);
+            go.tag = tag;
             go.transform.position = feetPosition;
 
-            // Default capsule mesh is centered on its transform; lift it to match CC center.
             var visual = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             visual.name = "Visual";
             visual.transform.SetParent(go.transform, false);
             visual.transform.localPosition = new Vector3(0f, 1f, 0f);
             Object.Destroy(visual.GetComponent<Collider>());
-            ApplyColor(visual, new Color(0.25f, 0.7f, 1f));
+            ApplyColor(visual, color);
 
             var controller = go.AddComponent<CharacterController>();
             controller.height = 2f;
@@ -51,8 +102,6 @@ namespace ProjectLOOP
             controller.skinWidth = 0.08f;
             controller.stepOffset = 0.3f;
             controller.minMoveDistance = 0f;
-
-            go.AddComponent<TopDownPlayerMotor>();
             return go;
         }
 

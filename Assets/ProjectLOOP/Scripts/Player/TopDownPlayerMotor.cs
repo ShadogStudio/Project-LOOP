@@ -10,15 +10,21 @@ namespace ProjectLOOP
         [SerializeField] float gravity = -20f;
 
         CharacterController _controller;
+        Health _health;
         float _verticalVelocity;
 
         void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            _health = GetComponent<Health>();
         }
 
         void Update()
         {
+            if (_health != null && _health.IsDead)
+            {
+                return;
+            }
             var input = ReadMoveInput();
             var move = new Vector3(input.x, 0f, input.y);
             if (move.sqrMagnitude > 1f)
