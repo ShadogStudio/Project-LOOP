@@ -219,7 +219,7 @@ Town (prepare / minimal shop)
 
 ## Current Phase
 
-**최소 근접 전투까지 구현.** 다음: 마을 최소 상점/해금.
+**전투 + 마을 상점까지 구현.** 다음: Synty 로컬 바인딩 또는 플레이테스트 피드백 반영.
 
 ## Deferred (v2+)
 
