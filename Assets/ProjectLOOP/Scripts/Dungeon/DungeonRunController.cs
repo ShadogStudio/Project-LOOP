@@ -73,7 +73,7 @@ namespace ProjectLOOP
                             marker.Position.z);
                         break;
                     case DungeonMarkerKind.Exit:
-                        CreatePortal(root, "TownReturn", marker.Position, SceneNames.Town, depositLoot: true, new Color(0.3f, 0.75f, 0.45f));
+                        CreatePortal(root, "TownReturn", marker.Position, SceneNames.Town, depositLoot: true, new Color(0.3f, 0.75f, 0.45f), "마을 복귀");
                         break;
                     case DungeonMarkerKind.LootSpawn:
                         CreateLoot(root, marker.Position, 10);
@@ -88,7 +88,7 @@ namespace ProjectLOOP
             PlaceholderVisuals.SetupTopDownCamera(player.transform);
         }
 
-        static void CreatePortal(Transform parent, string name, Vector3 position, string scene, bool depositLoot, Color color)
+        static void CreatePortal(Transform parent, string name, Vector3 position, string scene, bool depositLoot, Color color, string label)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = name;
@@ -98,6 +98,7 @@ namespace ProjectLOOP
             go.GetComponent<BoxCollider>().isTrigger = true;
             go.AddComponent<ScenePortal>().Configure(scene, depositLoot);
             PlaceholderVisuals.ApplyColor(go, color);
+            PlaceholderVisuals.AddWorldLabel(go.transform, label, 1.8f);
         }
 
         static void CreateLoot(Transform parent, Vector3 position, int amount)

@@ -20,7 +20,8 @@ namespace ProjectLOOP
                 new Vector3(0f, 0.25f, 9f),
                 SceneNames.Dungeon,
                 depositLoot: false,
-                new Color(0.45f, 0.35f, 0.9f));
+                new Color(0.45f, 0.35f, 0.9f),
+                "던전 입장");
 
             CreateShop(new Vector3(-6f, 0.25f, 0f));
 
@@ -43,6 +44,7 @@ namespace ProjectLOOP
             col.isTrigger = true;
             go.AddComponent<TownShopZone>();
             PlaceholderVisuals.ApplyColor(go, new Color(0.95f, 0.7f, 0.2f));
+            PlaceholderVisuals.AddWorldLabel(go.transform, "상점 (1 / 2)", 1.8f);
         }
 
         static void CreateGround(string name, Vector3 position, Vector3 scale, Color color)
@@ -54,7 +56,7 @@ namespace ProjectLOOP
             PlaceholderVisuals.ApplyColor(go, color);
         }
 
-        static void CreatePortal(string name, Vector3 position, string scene, bool depositLoot, Color color)
+        static void CreatePortal(string name, Vector3 position, string scene, bool depositLoot, Color color, string label)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = name;
@@ -64,6 +66,7 @@ namespace ProjectLOOP
             col.isTrigger = true;
             go.AddComponent<ScenePortal>().Configure(scene, depositLoot);
             PlaceholderVisuals.ApplyColor(go, color);
+            PlaceholderVisuals.AddWorldLabel(go.transform, label, 1.8f);
         }
     }
 }

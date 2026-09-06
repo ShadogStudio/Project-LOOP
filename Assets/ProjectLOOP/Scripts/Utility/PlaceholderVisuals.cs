@@ -64,6 +64,7 @@ namespace ProjectLOOP
 
             var health = go.AddComponent<Health>();
             health.Configure(30);
+            go.AddComponent<WorldHealthOverlay>();
 
             var melee = go.AddComponent<MeleeAttack>();
             melee.Configure(1.55f, 8, 0.85f, "Player");
@@ -83,6 +84,16 @@ namespace ProjectLOOP
             box.size = size;
             go.AddComponent<OutOfBoundsKillZone>();
             return go;
+        }
+
+        public static void AddWorldLabel(Transform parent, string text, float heightOffset = 1.6f)
+        {
+            var labelGo = new GameObject("Label");
+            labelGo.transform.SetParent(parent, false);
+            var sy = Mathf.Approximately(parent.localScale.y, 0f) ? 1f : parent.localScale.y;
+            labelGo.transform.localPosition = new Vector3(0f, heightOffset / sy, 0f);
+            labelGo.transform.localScale = Vector3.one;
+            labelGo.AddComponent<WorldLabelOverlay>().SetText(text);
         }
 
         static GameObject CreateCapsuleActor(string name, string tag, Vector3 feetPosition, Color color)
