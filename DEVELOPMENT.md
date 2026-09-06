@@ -2,11 +2,11 @@
 
 ## Current Status
 
-기획 v1 확정 — 구현 1단계(자체 코어 + Simple dungeon generator) 대기
+구현 1단계 플레이테스트 확인 — 이동·루트 획득/예치·사망 시 런 루트 손실 동작
 
 ## In Progress
 
-* (없음 — 구현 시작 전)
+* [~] 근접 기본 공격·피격 (다음)
 
 ## Completed
 
@@ -15,23 +15,24 @@
 * [x] Unity 개발 규칙 (Cursor rule) 추가
 * [x] `Assets/ThirdParty` Git 제외 규칙
 * [x] `Assets/ProjectLOOP` 폴더 골격
-* [x] 핵심 루프·재화 규칙
-* [x] 자체 구현 원칙 확정 (완성형 템플릿에 핵심 로직 비의존)
-* [x] 던전: Simple procedural(베이스) → Dungeon Architect(최종) provider 교체 방향 확정
-* [x] Core Asset Set (POLYGON Fantasy 중심) 정리
-* [x] 기획 v1 Open Questions 확정 (전투/메타/실패/세션/카메라/Simple 규칙)
-* [x] EOS(클라우드 저장·업적)는 v2+ · `IOnlineServices` 훅으로만 예약
+* [x] 기획 v1 확정
+* [x] Town ↔ Dungeon 씬 흐름
+* [x] TownWallet / RunInventory + 로컬 저장 포트
+* [x] `IOnlineServices` Null stub
+* [x] 탑다운 이동·카메라 (~50°)
+* [x] `IDungeonGenerator` + `SimpleProceduralDungeonGenerator` (5~8방 + 복도)
+* [x] 플레이스홀더로 런 루프 실행 가능
+* [x] 플레이테스트: 이동 / 골드 획득·유지 / 사망 시 손실 확인
 
 ## Next
 
-* [ ] `IDungeonGenerator` + `SimpleProceduralDungeonGenerator` 설계·구현
-* [ ] Town ↔ Dungeon / TownWallet·RunInventory / 탑다운 이동·카메라 자체 구현
-* [ ] 근접 기본 공격·피격·사망/복귀 최소 전투
-* [ ] 저장 포트 + `IOnlineServices` Null stub (로컬 먼저)
+* [ ] 근접 기본 공격·피격·적 AI 최소 버전
+* [ ] 마을 최소 상점/해금
 * [ ] ThirdParty 훅에 Synty 바인딩 (로컬)
-* [ ] 이후 Dungeon Architect 어댑터 / EOS 본연동 (v2+)
+* [ ] Dungeon Architect 어댑터 / EOS 본연동 (v2+)
 
 ## Issues
 
-* [!] ThirdParty·Dungeon Architect·EOS 없이도 공개 베이스가 컴파일·오프라인 동작하도록 어댑터 경계를 유지할 것
-* [!] EOS 자격 증명·설정은 공개 Git에 올리지 말 것
+* [!] 현재 적 스폰은 DeathZone 플레이스홀더 — 전투 구현 시 교체
+* [!] ThirdParty·DA·EOS 없이도 공개 베이스가 컴파일·오프라인 동작해야 함
+* [!] EOS 자격 증명은 공개 Git에 올리지 말 것

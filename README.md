@@ -6,7 +6,7 @@
 
 ## 현재 단계
 
-**기획 우선.** 코드 구현은 `Docs/DESIGN.md`의 Open Questions를 정리한 뒤에 진행합니다.
+**구현 1단계.** 플레이스홀더로 Town ↔ Dungeon 루프가 동작합니다. Synty 등 ThirdParty는 로컬 바인딩 예정입니다.
 
 ## 특징 (목표)
 
@@ -24,8 +24,10 @@
 ## 실행 방법
 
 1. Unity Hub에서 이 프로젝트를 연다 (권장 버전: `6000.3.20f1`).
-2. 지금은 `Assets/Scenes/SampleScene.unity`를 연다.
-3. 기획 확정 후 Town / Dungeon 씬으로 교체할 예정이다.
+2. `Assets/ProjectLOOP/Scenes/Town.unity`를 연다 (Build Settings 첫 씬).
+3. Play 한다.
+4. **WASD / 방향키**로 이동한다.
+5. 보라 포털 → 던전, 노란 구체 → 런 루트, 초록 포털 → 마을 복귀(예치), 빨간 구역 → 사망(런 루트 손실).
 
 ## 공개 저장소 vs 로컬 빌드
 

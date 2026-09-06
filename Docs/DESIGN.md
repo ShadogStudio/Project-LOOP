@@ -219,7 +219,7 @@ Town (prepare / minimal shop)
 
 ## Current Phase
 
-**기획 v1 확정.** 구현 1단계(자체 코어 + Simple generator) 대기.
+**구현 1단계 완료(플레이 가능).** 다음: 근접 전투 최소 버전.
 
 ## Deferred (v2+)
 
