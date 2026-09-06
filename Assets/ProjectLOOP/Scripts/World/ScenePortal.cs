@@ -26,6 +26,10 @@ namespace ProjectLOOP
             {
                 GameSession.Instance.DepositRunLootToTown();
             }
+            else
+            {
+                GameSession.EnsureExists().PersistMeta();
+            }
 
             SceneManager.LoadScene(targetSceneName);
         }

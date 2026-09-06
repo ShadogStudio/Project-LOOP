@@ -38,11 +38,14 @@ namespace ProjectLOOP
                 feetPosition,
                 new Color(0.25f, 0.7f, 1f));
 
+            var session = GameSession.EnsureExists();
+            session.GetEffectiveCombatStats(out var maxHp, out var meleeDamage);
+
             var health = go.AddComponent<Health>();
-            health.Configure(50);
+            health.Configure(maxHp);
 
             var melee = go.AddComponent<MeleeAttack>();
-            melee.Configure(1.7f, 14, 0.5f, "Enemy");
+            melee.Configure(1.7f, meleeDamage, 0.5f, "Enemy");
 
             go.AddComponent<TopDownPlayerMotor>();
             go.AddComponent<PlayerMeleeInput>();

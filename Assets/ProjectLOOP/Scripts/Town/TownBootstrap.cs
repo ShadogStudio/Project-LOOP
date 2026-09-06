@@ -22,6 +22,8 @@ namespace ProjectLOOP
                 depositLoot: false,
                 new Color(0.45f, 0.35f, 0.9f));
 
+            CreateShop(new Vector3(-6f, 0.25f, 0f));
+
             PlaceholderVisuals.CreateOutOfBoundsKillVolume(
                 transform,
                 new Vector3(0f, -12f, 0f),
@@ -29,6 +31,18 @@ namespace ProjectLOOP
 
             var hud = gameObject.AddComponent<StubHud>();
             hud.SetLocationLabel("Town");
+        }
+
+        static void CreateShop(Vector3 position)
+        {
+            var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            go.name = "TownShop";
+            go.transform.position = position;
+            go.transform.localScale = new Vector3(3.2f, 0.35f, 3.2f);
+            var col = go.GetComponent<BoxCollider>();
+            col.isTrigger = true;
+            go.AddComponent<TownShopZone>();
+            PlaceholderVisuals.ApplyColor(go, new Color(0.95f, 0.7f, 0.2f));
         }
 
         static void CreateGround(string name, Vector3 position, Vector3 scale, Color color)
