@@ -31,7 +31,8 @@
 6. 공격: **마우스 좌클릭 / Space / J**
 7. **상점**(주황): **1** 활력(+최대 HP), **2** 힘(+공격력)
 
-자세한 기획: [Docs/DESIGN.md](Docs/DESIGN.md) · 진행 상태: [DEVELOPMENT.md](DEVELOPMENT.md)
+자세한 기획: [Docs/DESIGN.md](Docs/DESIGN.md) · 진행 상태: [DEVELOPMENT.md](DEVELOPMENT.md)  
+기술 포트폴리오: [Docs/PORTFOLIO.md](Docs/PORTFOLIO.md) · AI 사용 예시: [Docs/AI_USAGE.md](Docs/AI_USAGE.md)
 
 ## 공개 vs 로컬
 
@@ -50,6 +51,8 @@ Assets/
   ThirdParty/    # 로컬 전용
 Docs/
   DESIGN.md
+  PORTFOLIO.md
+  AI_USAGE.md
 ```
 
 ## 빌드

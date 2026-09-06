@@ -22,6 +22,11 @@ v1 코어 플레이 가능 — 마을↔던전, 전투, 상점, 기본 UX 피드
 * [ ] (v2+) 던전 도구 어댑터
 * [ ] (v2+) EOS 클라우드 저장·업적
 
+## 참고 문서
+
+* [Docs/PORTFOLIO.md](Docs/PORTFOLIO.md) — 기술 포트폴리오
+* [Docs/AI_USAGE.md](Docs/AI_USAGE.md) — AI 사용 예시
+
 ## 이슈
 
 * [!] 외형·환경은 플레이스홀더
