@@ -104,3 +104,9 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Third-party / purchased assets (local only — not for public Git)
+# Keep README so clones know where to place assets for full builds.
+/[Aa]ssets/ThirdParty/**
+!/[Aa]ssets/ThirdParty/README.md
+!/[Aa]ssets/ThirdParty/README.md.meta
