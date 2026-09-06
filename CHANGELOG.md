@@ -4,15 +4,13 @@
 
 ### Added
 
-* 포트폴리오용 공개 베이스 구조 (`Assets/ProjectLOOP`)
-* Town / Dungeon 스텁 씬 및 마을↔던전 루프 프로토타입
-* `TownWallet` / `RunInventory` 재화 스텁
+* 포트폴리오용 폴더 골격 (`Assets/ProjectLOOP`)
 * 기획 문서 (`Docs/DESIGN.md`) 및 개발 상태 문서 (`DEVELOPMENT.md`)
 * `Assets/ThirdParty` 로컬 전용 에셋 폴더 (README만 Git 포함)
 
 ### Changed
 
-* Build Settings 시작 씬을 Town / Dungeon으로 변경
+* 기획 확정 전까지 게임플레이 스텁 코드를 제거하고 문서 중심으로 정리
 
 ### Improved
 

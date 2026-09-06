@@ -28,34 +28,25 @@ Town (prepare / spend persistent wealth)
 | Town wallet | Persistent gold | Kept | Receives deposited run loot |
 | Run inventory | Dungeon-carried loot | Cleared | Deposited into town wallet |
 
-Stub implementation:
-
-- `TownWallet` — PlayerPrefs persistence
-- `RunInventory` — in-memory for the current run
-- Town return portal deposits loot; death zone clears loot and returns to Town
-
-## Scenes (Stub)
+## Planned Scenes
 
 | Scene | Role |
 |-------|------|
-| `Town` | Hub. Dungeon entrance portal. Shows persistent gold. |
-| `Dungeon` | Temporary run space. Loot pickups, return portal, death zone. |
-
-Playable with placeholders only (no third-party art required).
-
-## Camera / Control (Stub)
-
-- Top-down follow camera
-- WASD / Arrow keys movement (Input System)
+| `Town` | Hub. Prepare, spend persistent wealth, enter dungeon. |
+| `Dungeon` | Run space. Explore, collect loot, return or die. |
 
 ## Public vs Local Assets
 
 | Path | Git | Use |
 |------|-----|-----|
-| `Assets/ProjectLOOP/` | Yes | Code, scenes, placeholders |
+| `Assets/ProjectLOOP/` | Yes | Code, scenes, placeholders (기획 확정 후 구현) |
 | `Assets/Settings/` | Yes | URP settings |
 | `Assets/ThirdParty/` | No (README only) | Purchased / external art for APK·EXE |
 | `Build/`, `*.apk`, `*.exe` | No | Local distribution builds |
+
+## Current Phase
+
+**기획 우선.** 코드/씬 구현은 기획(Open Questions 포함)이 정리된 뒤에 진행한다.
 
 ## Open Questions (Next Design Pass)
 
@@ -65,9 +56,11 @@ Playable with placeholders only (no third-party art required).
 - Failure cost beyond run loot (equipment durability, etc.)
 - Session length target and difficulty curve
 - Mobile (APK) vs PC (EXE) input UX differences
+- Camera feel (height, angle, zoom) and control scheme details
 
 ## Non-Goals (Current Phase)
 
+- Gameplay code / stub prototypes
 - Full combat systems
 - Procedural generation
 - Shipping store assets in the public repository
