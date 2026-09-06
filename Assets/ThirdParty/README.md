@@ -1,19 +1,7 @@
-# ThirdParty 에셋 (로컬 전용)
+# ThirdParty (로컬 전용)
 
-이 폴더는 **공개 Git에 포함되지 않습니다.**
+**공개 Git에 포함되지 않습니다** (이 README만 예외).
 
-구매 에셋, 외부 팩, 배포 빌드(APK/EXE)용 고품질 아트를 여기에 배치하세요.
+구매·외부 에셋과 APK/EXE용 아트를 여기에 둡니다. 클론만으로는 폴더가 비어 있으며, 플레이스홀더만으로도 마을/던전은 실행됩니다.
 
-## 용도
-
-| 대상 | 위치 |
-|------|------|
-| 공개 저장소 / 포트폴리오 코드 | `Assets/ProjectLOOP/` (플레이스홀더) |
-| 로컬 개발 + APK/EXE 빌드 | `Assets/ThirdParty/` + ProjectLOOP |
-
-## 주의
-
-- 클론만으로는 ThirdParty 내용이 없습니다.
-- 플레이스홀더만으로 마을/던전 스텁은 실행됩니다.
-- 빌드 산출물(`Build/`, `*.apk`, `*.exe`)도 Git에 올리지 마세요.
-- Package Manager가 `Assets/Synty` 등으로 임포트하면 `Assets/ThirdParty/` 아래로 옮기세요.
+Package Manager가 `Assets/Synty` 등으로 임포트하면 `Assets/ThirdParty/` 아래로 옮기세요. 빌드 산출물도 Git에 올리지 마세요.
