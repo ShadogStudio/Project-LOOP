@@ -1,4 +1,6 @@
 # Scenes
 
-기획 확정 후 Town / Dungeon 등 씬을 이곳에 추가합니다.
-지금은 `Assets/Scenes/SampleScene.unity`를 기본으로 둡니다.
+- `Town.unity` — hub (Build Settings index 0)
+- `Dungeon.unity` — procedural run via `DungeonRunController`
+
+Play from Town. WASD move. Purple portal → dungeon. Green portal → deposit & return. Red zones → death (lose run loot).

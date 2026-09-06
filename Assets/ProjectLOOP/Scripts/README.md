@@ -1,4 +1,8 @@
 # Scripts
 
-기획이 확정된 뒤 여기에 게임 코드를 추가합니다.
-현재 단계는 기획 문서(`Docs/DESIGN.md`) 우선입니다.
+구현 1단계 코드가 여기 있습니다.
+
+- `Core` — GameSession, TownWallet, RunInventory, 로컬 저장
+- `Online` — IOnlineServices / Null stub (EOS는 이후)
+- `Dungeon` — IDungeonGenerator, SimpleProcedural, DungeonRunController
+- `Town` / `Player` / `World` / `UI`
