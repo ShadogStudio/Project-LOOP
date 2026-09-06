@@ -2,11 +2,11 @@
 
 ## Current Status
 
-기획 우선 단계 — 핵심 루프·재화·씬 흐름을 `Docs/DESIGN.md`에서 정리 중
+기획 v1 확정 — 구현 1단계(자체 코어 + Simple dungeon generator) 대기
 
 ## In Progress
 
-* [~] 핵심 루프 / 재화 규칙 기획 상세화 (Open Questions)
+* (없음 — 구현 시작 전)
 
 ## Completed
 
@@ -14,16 +14,24 @@
 * [x] TutorialInfo / Readme 템플릿 제거
 * [x] Unity 개발 규칙 (Cursor rule) 추가
 * [x] `Assets/ThirdParty` Git 제외 규칙
-* [x] `Assets/ProjectLOOP` 폴더 골격 (코드 구현 전)
-* [x] 기획 문서 초안 (`Docs/DESIGN.md`)
+* [x] `Assets/ProjectLOOP` 폴더 골격
+* [x] 핵심 루프·재화 규칙
+* [x] 자체 구현 원칙 확정 (완성형 템플릿에 핵심 로직 비의존)
+* [x] 던전: Simple procedural(베이스) → Dungeon Architect(최종) provider 교체 방향 확정
+* [x] Core Asset Set (POLYGON Fantasy 중심) 정리
+* [x] 기획 v1 Open Questions 확정 (전투/메타/실패/세션/카메라/Simple 규칙)
+* [x] EOS(클라우드 저장·업적)는 v2+ · `IOnlineServices` 훅으로만 예약
 
 ## Next
 
-* [ ] DESIGN Open Questions 결정 (전투 / 던전 생성 / 메타 진행 / 카메라·조작)
-* [ ] 기획 확정 후 Town / Dungeon 및 재화 시스템 구현
-* [ ] 공개용 플레이스홀더로 실행 가능한 베이스 구성
-* [ ] 로컬 ThirdParty 에셋 연동 지점 정리
+* [ ] `IDungeonGenerator` + `SimpleProceduralDungeonGenerator` 설계·구현
+* [ ] Town ↔ Dungeon / TownWallet·RunInventory / 탑다운 이동·카메라 자체 구현
+* [ ] 근접 기본 공격·피격·사망/복귀 최소 전투
+* [ ] 저장 포트 + `IOnlineServices` Null stub (로컬 먼저)
+* [ ] ThirdParty 훅에 Synty 바인딩 (로컬)
+* [ ] 이후 Dungeon Architect 어댑터 / EOS 본연동 (v2+)
 
 ## Issues
 
-* [!] 게임플레이 코드는 기획 확정 전까지 추가하지 않음
+* [!] ThirdParty·Dungeon Architect·EOS 없이도 공개 베이스가 컴파일·오프라인 동작하도록 어댑터 경계를 유지할 것
+* [!] EOS 자격 증명·설정은 공개 Git에 올리지 말 것
